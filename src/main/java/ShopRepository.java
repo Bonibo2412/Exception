@@ -1,5 +1,9 @@
+import java.util.Arrays;
+
 public class ShopRepository {
     private Product[] products = new Product[0];
+
+
 
     /**
      * Вспомогательный метод для имитации добавления элемента в массив
@@ -11,7 +15,9 @@ public class ShopRepository {
      */
     private Product[] addToArray(Product[] current, Product product) {
         Product[] tmp = new Product[current.length + 1];
-        System.arraycopy(current, 0, tmp, 0, current.length);
+        for (int i = 0; i < current.length; i++) {
+            tmp[i] = current[i];
+        }
         tmp[tmp.length - 1] = product;
         return tmp;
     }
@@ -23,9 +29,12 @@ public class ShopRepository {
      */
     public void add(Product product) {
         products = addToArray(products, product);
+        if (this.findById(product.getId()) != null) {
+            throw new AlreadyExistsException(id);
+        }
     }
 
-    public Product[] findAll() {
+        public Product[] findAll() {
         return products;
     }
 
